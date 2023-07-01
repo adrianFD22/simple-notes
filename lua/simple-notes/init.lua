@@ -70,13 +70,13 @@ local function open_daily_note()
             daily_events = daily_events .. "\n\n"
 
             -- Update punctual events file
-            utils.set_punctual_events(updated_events, punctual_events_path)
+            notes.set_punctual_events(updated_events, punctual_events_path)
         end
 
         -- Daily schedule
         local day_of_the_week = os.date("%A")
         local schedule_header = "# Schedule\n\n"
-        local daily_schedule = schedule_header .. utils.read_all(day_of_the_week .. ".md")
+        local daily_schedule = schedule_header .. utils.read_all(M.templates_dir .. day_of_the_week .. ".md")
         daily_schedule = daily_schedule .. "\n\n"
 
         -- Day notes

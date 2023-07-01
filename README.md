@@ -1,7 +1,7 @@
 
 # simple-notes
 
-This is the script I use for managing my daily note workflow. When I fully transitioned to vim, I stopped using Obsidian. There were some Obsidian features that I love and I missed, so I implemented some of these functionalities that I liked the most.
+This is the neovim plugin I use for managing my daily note workflow. When I fully transitioned to neovim, I stopped using Obsidian. There were some Obsidian features that I love and I missed, so I implemented some of these functionalities that I liked the most.
 
 
 ## Installation
