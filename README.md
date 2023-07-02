@@ -79,6 +79,8 @@ Feel free to ask any questions via issues.
 
 - Add functionalities
     - A function for getting the day of certain day of the week day
+    - A function for getting the calendar of the next days
+    - Autosort the punctual events file
 - Improve robustness
     - Perform shell expansion in the options string
     - Auto create punctual_events.lua and cyclic_events.lua file

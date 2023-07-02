@@ -96,6 +96,63 @@ local function open_daily_note()
 	vim.cmd(command)
 end
 
+local function get_calendar(date, num_days)
+    -- Check parameters
+    if num_days == nil then
+        num_days = date
+        date = os.date("%Y-%m-%d")
+    end
+
+    local calendar = {}
+    local year, month, day = date:match("(%d%d%d%d)-(%d%d)-(%d%d)")
+
+    local punctual_events_path = M.daily_dir .. "punctual_events.lua"
+    local cyclic_events_path = M.daily_dir .. "cyclic_events.lua"
+
+    for i=0,num_days do
+        local curr_date = os.date("%Y-%m-%d", os.time({year = year, month = month, day = day + i}))
+
+        local punctual_events = notes.get_punctual_events(curr_date, punctual_events_path)
+        local cyclic_events = notes.get_cyclic_events(curr_date, cyclic_events_path)
+
+        local curr_events = {}
+
+        for _,v in ipairs(punctual_events) do
+            table.insert(curr_events, v)
+        end
+
+        for _,v in ipairs(cyclic_events) do
+            table.insert(curr_events, v)
+        end
+
+        calendar[curr_date] = curr_events
+    end
+
+    return calendar
+end
+
+local function print_calendar(num_days)
+    local calendar = get_calendar(num_days)
+
+    local today_date = os.date('%Y-%m-%d')
+    local year, month, day = today_date:match("(%d%d%d%d)-(%d%d)-(%d%d)")
+
+    local log = ""
+
+    for i=0,num_days do
+        local curr_date = os.date("%Y-%m-%d", os.time({year = year, month = month, day = day + i}))
+        log = log .. curr_date .. "\n"
+
+        for _,event in ipairs(calendar[curr_date]) do
+            log = log .. "\t" .. event
+        end
+
+        log = log .. "\n"
+    end
+
+    vim.print(log)
+end
+
 
 -----------------------------------------
 --            Main table
@@ -121,7 +178,9 @@ M = {
     print_options = print_options,
 
     date_coset = notes.date_coset,
-    open_daily_note = open_daily_note
+    open_daily_note = open_daily_note,
+    get_calendar = get_calendar,
+    print_calendar = print_calendar
 }
 
 return M
